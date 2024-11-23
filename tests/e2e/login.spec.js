@@ -3,13 +3,13 @@ const { test } = require('../support/index');
 test('deve logar como administrador', async ({ page }) => {
     await page.login.visit();
     await page.login.submit('admin@zombieplus.com', 'pwd123');
-    await page.movies.isLoggedIn();
+    await page.login.isLoggedIn('Admin');
 });
 
 test('não deve logar com senha incorreta', async ({ page }) => {
     await page.login.visit();
     await page.login.submit('admin@zombieplus.com', 'abc123');
-    const messageToast = 'Oops!Ocorreu um erro ao tentar efetuar o login. Por favor, verifique suas credenciais e tente novamente.';
+    const messageToast = 'Ocorreu um erro ao tentar efetuar o login. Por favor, verifique suas credenciais e tente novamente.';
     await page.toast.containText(messageToast);
 });
 
