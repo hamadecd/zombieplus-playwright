@@ -58,4 +58,26 @@ export class Api {
         const body = JSON.parse(await response.text());
         return body.data[0].id;
     }
+
+    async postTvShow(tvshow) {
+        const companyId = await this.getCompanyIdByName(tvshow.company);
+
+        const response = await this.request.post(this.baseApi + '/tvshows', {
+            headers: {
+                Authorization: this.token,
+                ContentType: 'multipart/form-data',
+                Accept: 'application/json, text/plain, */*'
+            },
+            multipart: {
+                title: tvshow.title,
+                overview: tvshow.overview,
+                company_id: companyId,
+                release_year: tvshow.release_year,
+                seasons: tvshow.seasons,
+                featured: tvshow.featured
+            }
+        });
+
+        expect(response.ok()).toBeTruthy();
+    }
 }
